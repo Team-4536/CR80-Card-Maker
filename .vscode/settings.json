@@ -1,0 +1,18 @@
+{
+    "java.project.referencedLibraries": {
+        "include": [
+            "lib/**/*.jar",
+            "c:\\Users\\mebob\\Downloads\\webcam-capture-master/**/*.jar",
+            "c:\\Users\\mebob\\Downloads\\webcam-capture-master\\webcam-capture-master/**/*.jar",
+            "c:\\Users\\mebob\\Downloads\\webcam-capture-0.3.12-dist(1)\\webcam-capture-0.3.12.jar",
+            "c:\\Users\\mebob\\Downloads\\webcam-capture-0.3.12-dist(1)\\libs\\bridj-0.7.0.jar",
+            "c:\\Users\\mebob\\Downloads\\webcam-capture-0.3.12-dist(1)\\libs\\slf4j-api-1.7.2.jar",
+            "webcam-capture-0.3.12-dist/webcam-capture-0.3.12.jar",
+            "webcam-capture-0.3.12-dist/libs/bridj-0.7.0.jar",
+            "webcam-capture-0.3.12-dist/libs/slf4j-api-1.7.2.jar"
+        ],
+        "exclude": [
+            "lib/webcam-capture-driver-jmf-0.3.13-20200330.202440-6.jar"
+        ]
+    }
+}

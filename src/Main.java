@@ -1,3 +1,5 @@
+package src;
+
 import javax.imageio.ImageIO;
 
 import org.bridj.cpp.std.list;
@@ -55,6 +57,8 @@ import javax.print.attribute.standard.PrinterResolution;
 
 import java.awt.event.*;
 
+import java.nio.file.Paths;
+
 public class Main {
     public static void captureWindow(JFrame window, Dimension webcamViewSize) throws IOException {
         // Webcam setup
@@ -76,7 +80,8 @@ public class Main {
         webcamCaptor.add(webcamPanel);
 
         // Card image is found and scaled
-        ImageIcon cardSource = new ImageIcon("resources/card.png");
+        // ImageIcon cardSource = new ImageIcon("\resources/card.png");
+        ImageIcon cardSource = new ImageIcon(Main.class.getResource("resources/card.png"));
         JLabel cardSwing = new JLabel(
                 new ImageIcon(cardSource.getImage().getScaledInstance(506, 318, Image.SCALE_SMOOTH)));
 
@@ -223,7 +228,7 @@ public class Main {
         // card setup
         BufferedImage imageCard = null;
         try {
-            imageCard = ImageIO.read(new File("C:/repos/cr80 maker/resources/card.png"));
+            imageCard = ImageIO.read(Main.class.getResource("resources/card.png"));
         } catch (IOException e) {
             System.out.println("I don't wanna");
         }
@@ -242,7 +247,7 @@ public class Main {
         combiner.dispose();
 
         // Card
-        ImageIcon cardSource = new ImageIcon("card.png");
+        ImageIcon cardSource = new ImageIcon(Main.class.getResource("resources/card.png"));
         JLabel cardSwing = new JLabel(
                 new ImageIcon(cardSource.getImage().getScaledInstance(506, 318, Image.SCALE_SMOOTH)));
 
@@ -312,7 +317,7 @@ public class Main {
                 if (!(fileNameInputBox.getText().equals("card"))) {
                     try {
                         ImageIO.write(combinedImage, "png",
-                                new File("C:/repos/cr80 maker/" + fileNameInputBox.getText() + ".png"));
+                                new File("C:/Users/Public/Pictures/" + fileNameInputBox.getText() + ".png"));
                     } catch (IOException e) {
                         System.out.println("I don't wanna");
                     }
@@ -328,7 +333,7 @@ public class Main {
         setPrinterNameButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent hello) {
                 try {
-                    ImageIO.write(combinedImage, "png", new File("C:/repos/cr80 maker/printedCard.png"));
+                    ImageIO.write(combinedImage, "png", new File("C:/Users/Public/Pictures/printedCard.png"));
                 } catch (IOException e) {
                     System.out.println("I don't wanna");
                 }
@@ -360,7 +365,7 @@ public class Main {
                     e.printStackTrace();
                     System.out.println("I don't wanna print");
                 }
-                if (new File("C:/repos/cr80 maker/printedCard.png").delete()) {
+                if (new File("C:/Users/Public/Pictures/printedCard.png").delete()) {
                     System.out.println("Deleted image successfully");
                 } else {
 

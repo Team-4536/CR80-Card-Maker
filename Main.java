@@ -76,7 +76,7 @@ public class Main {
         webcamCaptor.add(webcamPanel);
 
         // Card image is found and scaled
-        ImageIcon cardSource = new ImageIcon("card.png");
+        ImageIcon cardSource = new ImageIcon("resources/card.png");
         JLabel cardSwing = new JLabel(
                 new ImageIcon(cardSource.getImage().getScaledInstance(506, 318, Image.SCALE_SMOOTH)));
 
@@ -199,11 +199,6 @@ public class Main {
         window.revalidate();
         window.repaint();
 
-        // test
-        FileWriter test = new FileWriter("Hello.txt", false);
-        test.write("what's up?");
-        test.close();
-
     }
 
     public static void reviewWindow(JFrame window, BufferedImage capture, String name, Dimension webcamViewSize) {
@@ -228,7 +223,7 @@ public class Main {
         // card setup
         BufferedImage imageCard = null;
         try {
-            imageCard = ImageIO.read(new File("C:/repos/cr80 maker/card.png"));
+            imageCard = ImageIO.read(new File("C:/repos/cr80 maker/resources/card.png"));
         } catch (IOException e) {
             System.out.println("I don't wanna");
         }

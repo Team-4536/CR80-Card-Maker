@@ -1,4 +1,5 @@
 package src;
+
 import javax.imageio.ImageIO;
 
 import org.bridj.cpp.std.list;
@@ -77,7 +78,7 @@ public class Main {
         webcamCaptor.add(webcamPanel);
 
         // Card image is found and scaled
-        ImageIcon cardSource = new ImageIcon("card.png");
+        ImageIcon cardSource = new ImageIcon(Main.class.getResource("resources/card.png"));
         JLabel cardSwing = new JLabel(
                 new ImageIcon(cardSource.getImage().getScaledInstance(506, 318, Image.SCALE_SMOOTH)));
 
@@ -200,11 +201,6 @@ public class Main {
         window.revalidate();
         window.repaint();
 
-        // test
-        FileWriter test = new FileWriter("Hello.txt", false);
-        test.write("what's up?");
-        test.close();
-
     }
 
     public static void reviewWindow(JFrame window, BufferedImage capture, String name, Dimension webcamViewSize) {
@@ -229,7 +225,7 @@ public class Main {
         // card setup
         BufferedImage imageCard = null;
         try {
-            imageCard = ImageIO.read(new File("C:/repos/cr80 maker/card.png"));
+            imageCard = ImageIO.read(Main.class.getResource("resources/card.png"));
         } catch (IOException e) {
             System.out.println("I don't wanna");
         }
@@ -248,7 +244,7 @@ public class Main {
         combiner.dispose();
 
         // Card
-        ImageIcon cardSource = new ImageIcon("card.png");
+        ImageIcon cardSource = new ImageIcon(Main.class.getResource("resources/card.png"));
         JLabel cardSwing = new JLabel(
                 new ImageIcon(cardSource.getImage().getScaledInstance(506, 318, Image.SCALE_SMOOTH)));
 
@@ -318,7 +314,7 @@ public class Main {
                 if (!(fileNameInputBox.getText().equals("card"))) {
                     try {
                         ImageIO.write(combinedImage, "png",
-                                new File("C:/repos/cr80 maker/" + fileNameInputBox.getText() + ".png"));
+                                new File("C:/Users/Public/Pictures/" + fileNameInputBox.getText() + ".png"));
                     } catch (IOException e) {
                         System.out.println("I don't wanna");
                     }
@@ -326,15 +322,52 @@ public class Main {
             }
         });
 
+        // printer text
+        JTextArea printerNumLabel = new JTextArea("Printer number:");
+        printerNumLabel.setFont(new Font("SansSerif", 0, 20));
+        // nameLabel.setForeground(Color.RED);
+        printerNumLabel.setBounds(537, 200, 135, 30);
+        printerNumLabel.setBackground(window.getContentPane().getBackground());
+        printerNumLabel.setEditable(false);
+
+        // printer name
+        JTextArea printerNameLabel = new JTextArea("???");
+        printerNameLabel.setFont(new Font("SansSerif", 0, 14));
+        // nameLabel.setForeground(Color.RED);
+        printerNameLabel.setBounds(537, 240, 252, 25);
+        printerNameLabel.setBackground(window.getContentPane().getBackground());
+        printerNameLabel.setBorder(new LineBorder(Color.BLACK, 1));
+        printerNameLabel.setEditable(false);
+
+        // printer num input box
+        JTextArea printerNumInputBox = new JTextArea();
+        printerNumInputBox.setFont(new Font("SansSerif", 0, 18));
+        printerNumInputBox.setBounds(685, 200, 40, 30);
+        printerNumInputBox.setBackground(window.getContentPane().getBackground());
+        printerNumInputBox.setBorder(new LineBorder(Color.BLACK, 1));
+
         // print button
-        JButton setPrinterNameButton = new JButton("print");
+        JButton setPrinterNameButton = new JButton("set");
         setPrinterNameButton.setFont(new Font("SansSerif", 0, 16));
         setPrinterNameButton.setForeground(Color.BLACK);
-        setPrinterNameButton.setBounds(618, 280, 75, 35);
+        setPrinterNameButton.setBounds(580, 280, 75, 35);
         setPrinterNameButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent hello) {
+                PrintService[] printServices = PrintServiceLookup.lookupPrintServices(DocFlavor.INPUT_STREAM.PNG, null);
+                setPrinterNameButton.setName(printerNumInputBox.getText());
+                printerNameLabel.setText(printServices[Integer.parseInt(printerNumInputBox.getText())].getName());
+            }
+        });
+
+        // print button
+        JButton printButton = new JButton("print");
+        printButton.setFont(new Font("SansSerif", 0, 16));
+        printButton.setForeground(Color.BLACK);
+        printButton.setBounds(655, 280, 75, 35);
+        printButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent hello) {
                 try {
-                    ImageIO.write(combinedImage, "png", new File("C:/repos/cr80 maker/printedCard.png"));
+                    ImageIO.write(combinedImage, "png", new File("C:/Users/Public/Pictures/printedCard.png"));
                 } catch (IOException e) {
                     System.out.println("I don't wanna");
                 }
@@ -342,9 +375,7 @@ public class Main {
                     // Find a PrintService
                     DocFlavor flavor = DocFlavor.INPUT_STREAM.PNG;
                     PrintService[] printServices = PrintServiceLookup.lookupPrintServices(flavor, null);
-                    System.out.println(PrintServiceLookup.lookupDefaultPrintService().getName());
-                    System.out.println(printServices[1].getName());
-                    PrintService selectedService = printServices[1];
+                    PrintService selectedService = printServices[Integer.parseInt(setPrinterNameButton.getName())];
 
                     // Create a PrintRequestAttributeSet
                     PrintRequestAttributeSet attributes = new HashPrintRequestAttributeSet();
@@ -366,7 +397,7 @@ public class Main {
                     e.printStackTrace();
                     System.out.println("I don't wanna print");
                 }
-                if (new File("C:/repos/cr80 maker/printedCard.png").delete()) {
+                if (new File("C:/Users/Public/Pictures/printedCard.png").delete()) {
                     System.out.println("Deleted image successfully");
                 } else {
 
@@ -415,6 +446,10 @@ public class Main {
         reviewContainer.add(fileNameLabel);
         reviewContainer.add(fileNameInputBox);
         reviewContainer.add(setFileNameButton);
+        reviewContainer.add(printerNumLabel);
+        reviewContainer.add(printerNumInputBox);
+        reviewContainer.add(printerNameLabel);
+        reviewContainer.add(printButton);
         window.add(reviewContainer);
         window.revalidate();
         window.repaint();

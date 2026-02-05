@@ -325,12 +325,43 @@ public class Main {
             }
         });
 
-        // print button
-        JButton setPrinterNameButton = new JButton("print");
+        // Print text
+        JTextArea printerNameLabel = new JTextArea("???");
+        printerNameLabel.setFont(new Font("SansSerif", 0, 20));
+        // nameLabel.setForeground(Color.RED);
+        printerNameLabel.setBounds(600, 200, 90, 30);
+        printerNameLabel.setBackground(window.getContentPane().getBackground());
+        printerNameLabel.setEditable(false);
+
+        // Printer num input box
+        JTextArea printerNumberInputBox = new JTextArea("1");
+        printerNumberInputBox.setFont(new Font("SansSerif", 0, 18));
+        printerNumberInputBox.setBounds(537, 240, 240, 30);
+        printerNumberInputBox.setBackground(window.getContentPane().getBackground());
+        printerNumberInputBox.setBorder(new LineBorder(Color.BLACK, 1));
+
+        JTextArea printerNumber = new JTextArea("0");
+
+        // Set printer button
+        JButton setPrinterNameButton = new JButton("set");
         setPrinterNameButton.setFont(new Font("SansSerif", 0, 16));
         setPrinterNameButton.setForeground(Color.BLACK);
-        setPrinterNameButton.setBounds(618, 280, 75, 35);
+        setPrinterNameButton.setBounds(575, 280, 75, 35);
         setPrinterNameButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent hello) {
+                DocFlavor favor = DocFlavor.INPUT_STREAM.PNG;
+                PrintService[] printSevices = PrintServiceLookup.lookupPrintServices(favor, null);
+                printerNameLabel.setText(printSevices[Integer.parseInt(printerNumberInputBox.getText())].toString());
+                printerNumber.setText(printerNumberInputBox.getText());
+            }
+        });
+
+        // print button
+        JButton printerButton = new JButton("print");
+        printerButton.setFont(new Font("SansSerif", 0, 16));
+        printerButton.setForeground(Color.BLACK);
+        printerButton.setBounds(650, 280, 75, 35);
+        printerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent hello) {
                 try {
                     ImageIO.write(combinedImage, "png", new File("C:/Users/Public/Pictures/printedCard.png"));
@@ -342,8 +373,9 @@ public class Main {
                     DocFlavor flavor = DocFlavor.INPUT_STREAM.PNG;
                     PrintService[] printServices = PrintServiceLookup.lookupPrintServices(flavor, null);
                     System.out.println(PrintServiceLookup.lookupDefaultPrintService().getName());
-                    System.out.println(printServices[1].getName());
-                    PrintService selectedService = printServices[1];
+                    System.out.println(printerNumber.getText());
+                    System.out.println(Integer.parseInt(printerNumber.getText()));
+                    PrintService selectedService = printServices[Integer.parseInt(printerNumber.getText())];
 
                     // Create a PrintRequestAttributeSet
                     PrintRequestAttributeSet attributes = new HashPrintRequestAttributeSet();
@@ -352,7 +384,7 @@ public class Main {
                     attributes.add(new PrinterResolution(300, 300, PrinterResolution.DPI));
 
                     // Create a Doc
-                    File file = new File("printedCard.png");
+                    File file = new File("C:/Users/Public/Pictures/printedCard.png");
                     FileInputStream fis = new FileInputStream(file);
                     Doc doc = new SimpleDoc(fis, flavor, null);
 
@@ -414,6 +446,9 @@ public class Main {
         reviewContainer.add(fileNameLabel);
         reviewContainer.add(fileNameInputBox);
         reviewContainer.add(setFileNameButton);
+        reviewContainer.add(printerNameLabel);
+        reviewContainer.add(printerButton);
+        reviewContainer.add(printerNumberInputBox);
         window.add(reviewContainer);
         window.revalidate();
         window.repaint();

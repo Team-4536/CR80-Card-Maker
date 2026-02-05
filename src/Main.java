@@ -334,7 +334,7 @@ public class Main {
         JTextArea printerNameLabel = new JTextArea("???");
         printerNameLabel.setFont(new Font("SansSerif", 0, 14));
         // nameLabel.setForeground(Color.RED);
-        printerNameLabel.setBounds(537, 240, 252, 25);
+        printerNameLabel.setBounds(537, 242, 240, 25);
         printerNameLabel.setBackground(window.getContentPane().getBackground());
         printerNameLabel.setBorder(new LineBorder(Color.BLACK, 1));
         printerNameLabel.setEditable(false);
